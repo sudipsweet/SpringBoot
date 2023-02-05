@@ -3,6 +3,10 @@ package com.maddy.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,8 +24,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
+	@NotBlank(message = "User Name can not be blank")
+	@Size(min = 3, max = 20, message = "User must be between 3 to 20 Character")
 	private String userName;
 	@Column(unique = true)
+	@Email(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,4}$")
 	private String email;
 	private String password;
 	private String imageUrl;

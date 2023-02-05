@@ -1,14 +1,86 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+
 <head>
 	<meta charset="UTF-8" />
 	<title>Home Page</title>
 </head>
+
 <body>
 	<section>
-		<h1>This is a Signup Page</h1>
-		<h2>Hello Registration Page</h2>
-		
-		</section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card mt-3">
+						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert"
+							role="alert">
+							<p th:text="${session.message.content}"></p>
+
+						</div>
+						<div class="container text-center">
+							<img style="width: 80px;" src="" th:src="@{/images/registration_icon.png}"
+								alt="Registration icon" />
+						</div>
+						<h1 class="text-center">Register Here !!</h1>
+						<!--Start Form-->
+
+						<form th:action="@{/form_submit}" method="POST" th:object="${user}">
+							<!--Name Field-->
+
+							<div class="form-group">
+								<label for="userName">Name</label>
+								<input type="text" th:classappend="${#fields.hasErrors('userName') ? 'is-invalid' : ''}"
+									class="form-control" name="userName" id="userName" placeholder="Enter Name" required
+									th:value="${user.userName}">
+							</div>
+							<div th:each="e : ${#fields.errors('userName')}" th:test="${e}" class="invalid-feedback">
+							</div>
+							<!--Email Field-->
+
+							<div class="form-group">
+								<label for="exampleInputEmail1">Email Address</label>
+								<input type="email" class="form-control" name="email" id="email"
+									aria-describedby="emailHelp" placeholder="Enter Email" required
+									th:value="${user.email}">
+							</div>
+							<!--Password Field-->
+
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" name="password" id="password"
+									placeholder="Password" required th:value="${user.password}">
+							</div>
+							<!--About Field-->
+
+							<div class="form-group">
+								<label for="about">About</label>
+								<textarea class="form-control" name="about" id="about" rows="3"
+									placeholder="About your Self !!" required th:text="${user.about}"></textarea>
+							</div>
+							<!--Aggrement Field-->
+
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input" name="trams" id="trams">
+								<label class="form-check-label" for="exampleCheck1">Accept Terms and Conditions</label>
+							</div>
+
+							<div class="container text-center">
+								<button type="submit" class="btn btn-primary text-white">Submit</button>
+								<button type="reset" class="btn btn-warning text-white">Reset</button>
+
+							</div>
+
+
+						</form>
+
+						<!--End Form-->
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</section>
 </body>
+
 </html>
