@@ -37,14 +37,12 @@ public class User {
 	private String role;
 	private boolean iSEnabled;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Contact> contacts = new ArrayList<>();
 	
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	/*
+	 * public User() { super(); // TODO Auto-generated constructor stub }
+	 */
 	public int getUserId() {
 		return userId;
 	}

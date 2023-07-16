@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -22,6 +23,8 @@ public class Controller {
 	
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	BCryptPasswordEncoder cryptPasswordEncoder;
 
 	@GetMapping("/")
 	public String home(Model m) {
@@ -33,6 +36,13 @@ public class Controller {
 	public String about(Model m) {
 		m.addAttribute("title", "About - Smart Contact");
 		return "about";
+	}
+	
+	@GetMapping("/signin")
+	public String logIn(Model m) {
+		System.out.println("Signin Calling");
+		m.addAttribute("title", "Log In");
+		return "signin";
 	}
 
 	@GetMapping("/signup")
@@ -62,6 +72,7 @@ public class Controller {
 			user.setImageUrl("default.icon");
 			user.setRole("user_role");
 			user.setiSEnabled(true);
+			user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
 			
 			User saveUser = userRepository.save(user);
 			model.addAttribute("user", new User());
